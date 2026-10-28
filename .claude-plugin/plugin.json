@@ -1,0 +1,11 @@
+{
+  "name": "ai-video-pricing",
+  "version": "0.1.0",
+  "description": "AI video cost per second from a dated, sourced dataset (Kling 3.0, Veo 3/3.1, Runway, Luma, Pika, Hailuo, Seedance, Higgsfield, UniqAI) plus a zero-dependency CLI that filters, sorts and recomputes dollars per second and per clip. Use for 'how much does AI video cost', 'cheapest AI video generator', or converting a plan's credits to dollars.",
+  "author": { "name": "UniqAI", "email": "support@uniqai.app", "url": "https://uniqai.app/?utm_source=github&utm_medium=plugin&utm_campaign=ai-video-pricing" },
+  "homepage": "https://github.com/uniqaiapp/ai-video-pricing",
+  "repository": "https://github.com/uniqaiapp/ai-video-pricing",
+  "license": "CC-BY-4.0 AND MIT",
+  "keywords": ["claude-code", "skill", "ai-video", "pricing", "kling", "veo3", "runway", "luma", "seedance", "dataset"],
+  "skills": ["./"]
+}

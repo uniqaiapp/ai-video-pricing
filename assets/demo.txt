@@ -1,0 +1,20 @@
+$ git clone https://github.com/uniqaiapp/ai-video-pricing ~/.claude/skills/ai-video-pricing
+# 69 rows, 15 services, source URL and check date on every row
+@wait 500
+$ node scripts/avp.mjs cheapest --resolution 720p --brief
+>  $ / s  service                model                  clip
+> ------  ---------------------  ---------------------  ---------
+> {l:$0.020}  BytePlus ModelArk API  Seedance 1.0 Pro Fast  5 s, 720p
+> {l:$0.030}  Google Flow            Gemini Omni Flash      8 s, 720p
+> {l:$0.060}  Luma app               Ray3.2                 5 s, 720p
+> {l:$0.060}  Luma API               Ray3.2                 5 s, 720p
+> {l:$0.073}  Pika                   Wan 3.0                5 s, 720p
+@wait 600
+$ node scripts/avp.mjs quote --plan-price 15 --credits 625 --credits-per-second 12
+> $ per second: {y:0.288}
+> formula: 12 cr/s × ($15.00 ÷ 625 cr)
+> $ per credit: 0.02400
+> $ per minute: 17.28
+@wait 600
+$ node scripts/avp.mjs stale --days 30
++ No rows older than 30 days.

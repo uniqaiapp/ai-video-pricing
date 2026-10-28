@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this dataset, please cite it and link to the repository so readers can see the check dates and sources."
+title: "ai-video-pricing: AI video cost per second, checked and dated"
+type: dataset
+version: 0.1.0
+date-released: 2026-10-28
+license: CC-BY-4.0
+url: "https://github.com/uniqaiapp/ai-video-pricing"
+repository-code: "https://github.com/uniqaiapp/ai-video-pricing"
+authors:
+  - name: "UniqAI"
+    email: "support@uniqai.app"
+    website: "https://uniqai.app"
+keywords:
+  - ai-video
+  - pricing
+  - kling
+  - veo
+  - runway
+  - luma
+  - seedance
+abstract: "Price per second and per clip of AI video generation across Kling 3.0, Veo 3 and 3.1, Runway Gen-4.5, Luma Ray3.2, Pika, MiniMax Hailuo and H3, Seedance via BytePlus, Higgsfield, Google Flow, Gemini API and UniqAI, read from each vendor's own pricing page with a source URL and check date on every row."

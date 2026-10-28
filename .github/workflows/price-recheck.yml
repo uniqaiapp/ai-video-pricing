@@ -1,0 +1,41 @@
+# Monthly reminder: opens (or updates) one issue listing every row whose checked_on is older than 30 days,
+# grouped by source page, as a checklist. Nothing is fetched from vendors; a human re-reads the pages.
+#
+# Reuse in another data repo: copy this file, replace the two `node scripts/avp.mjs stale ...` lines with
+# a command that prints your stale rows as Markdown (and a count), keep the label and the gh calls.
+name: price recheck reminder
+on:
+  schedule:
+    - cron: "0 9 1 * *"   # 09:00 UTC on the 1st of every month
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - name: List rows older than 30 days
+        id: stale
+        run: |
+          node scripts/avp.mjs stale --days 30 > stale.md
+          count=$(node scripts/avp.mjs stale --days 30 --format json | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).length))')
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          cat stale.md
+      - name: Open or update the reminder issue
+        if: steps.stale.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          COUNT: ${{ steps.stale.outputs.count }}
+        run: |
+          gh label create price-recheck --color D1FE17 --description "Monthly price recheck" --force
+          existing=$(gh issue list --label price-recheck --state open --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file stale.md
+          else
+            gh issue create --title "Price recheck $(date -u +%Y-%m): $COUNT rows older than 30 days" --label price-recheck --body-file stale.md
+          fi

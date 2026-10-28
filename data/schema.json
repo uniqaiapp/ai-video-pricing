@@ -1,0 +1,43 @@
+{
+  "$comment": "Hand-written schema for data/prices.json, checked by scripts/avp.mjs validate (no jsonschema package). One object per row. Missing optional fields mean null.",
+  "schema_version": 1,
+  "required": ["id", "service", "door", "model", "maker", "tier", "billing", "status", "source_label", "source_url", "checked_on"],
+  "fields": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "doc": "Unique, kebab-case, stable across price refreshes." },
+    "service": { "type": "string", "doc": "Where you pay: the app or API that bills you, e.g. 'Runway API', 'Luma app', 'UniqAI'." },
+    "door": { "type": "string", "enum": ["app", "api"], "doc": "Consumer app with plans/packs, or developer API." },
+    "model": { "type": "string", "doc": "Model name as the vendor writes it, e.g. 'Kling 3.0', 'Veo 3.1 Fast'." },
+    "maker": { "type": "string", "doc": "Who trained the model (Kuaishou, Google, ByteDance, ...), so resold models can be grouped." },
+    "tier": { "type": "string", "doc": "Plan, pack or rate the row is priced on, with its price, e.g. 'Standard plan ($15/mo, 625 credits)'." },
+    "billing": { "type": "string", "enum": ["plan", "pack", "credit_rate", "per_clip", "per_second", "per_token"], "doc": "Which formula applies; see references/methodology.md." },
+    "plan_price_usd": { "type": "number", "min": 0, "doc": "plan/pack: price of the plan (monthly billing) or pack." },
+    "plan_credits": { "type": "number", "min": 0, "doc": "plan/pack: credits included for that price." },
+    "price_per_credit_usd": { "type": "number", "min": 0, "doc": "credit_rate: a published dollar price per credit." },
+    "credits_per_clip": { "type": "number", "min": 0, "doc": "plan/pack/credit_rate: credits charged for one clip of `seconds`." },
+    "credits_per_second": { "type": "number", "min": 0, "doc": "plan/pack/credit_rate: credits charged per second of output (alternative to credits_per_clip)." },
+    "clip_price_usd": { "type": "number", "min": 0, "doc": "per_clip: published dollar price for one clip of `seconds`." },
+    "second_price_usd": { "type": "number", "min": 0, "doc": "per_second: published dollar price per second." },
+    "tokens_per_second": { "type": "number", "min": 0, "doc": "per_token: tokens the vendor bills per second of video." },
+    "usd_per_1m_tokens": { "type": "number", "min": 0, "doc": "per_token: published price per million tokens." },
+    "seconds": { "type": "number", "min": 0, "doc": "Seconds delivered per clip (not requested; UniqAI's '5 s' Veo option delivers 6)." },
+    "resolution": { "type": "string", "doc": "Output resolution as the vendor labels it (480p, 720p, 768p, 1080p, 2K, 4K)." },
+    "audio": { "type": "boolean", "doc": "true when the price includes generated audio; absent when the vendor does not say." },
+    "usd_per_second": { "type": "number", "min": 0, "doc": "Computed by `avp recompute --write`, rounded to 3 decimals. Never typed by hand; null for not_published/discontinued rows." },
+    "status": { "type": "string", "enum": ["published", "not_published", "discontinued"], "doc": "not_published: the vendor shows the price only inside an app or console." },
+    "approximate": { "type": "boolean", "doc": "true when the vendor itself writes 'about' or '≈'." },
+    "source_label": { "type": "string", "doc": "Short name of the source page." },
+    "source_url": { "type": "string", "pattern": "^https?://", "doc": "The vendor's own pricing page or docs. No third-party roundups." },
+    "source_date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "doc": "Date printed on the source page, when it has one." },
+    "checked_on": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "doc": "The day a maintainer last read the source and confirmed the numbers." },
+    "notes": { "type": "string", "doc": "Anything a reader needs before comparing this cell with another." }
+  },
+  "billing_requires": {
+    "plan": [["plan_price_usd", "plan_credits"], ["credits_per_clip", "credits_per_second"]],
+    "pack": [["plan_price_usd", "plan_credits"], ["credits_per_clip", "credits_per_second"]],
+    "credit_rate": [["price_per_credit_usd"], ["credits_per_clip", "credits_per_second"]],
+    "per_clip": [["clip_price_usd"], ["seconds"]],
+    "per_second": [["second_price_usd"]],
+    "per_token": [["tokens_per_second"], ["usd_per_1m_tokens"]]
+  },
+  "$billing_requires_comment": "For published rows: each inner list is a group of which at least one field must be present. credits_per_clip additionally requires seconds."
+}

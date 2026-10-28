@@ -1,0 +1,5 @@
+$ per second: 0.080
+formula: 80 cr × ($4.99 ÷ 1,000 cr) ÷ 5 s
+$ per credit: 0.00499
+$ per clip (5 s): 0.399
+$ per minute: 4.79

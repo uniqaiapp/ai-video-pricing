@@ -1,0 +1,4 @@
+$ per second: 0.288
+formula: 12 cr/s × ($15.00 ÷ 625 cr)
+$ per credit: 0.02400
+$ per minute: 17.28

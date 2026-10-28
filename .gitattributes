@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.png binary
+*.csv linguist-generated=true
+examples/* linguist-generated=true

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and ideas
+    url: https://github.com/uniqaiapp/ai-video-pricing/discussions
+    about: Anything that is not a price correction, a new row or a bug.
+  - name: Email the maintainers
+    url: mailto:support@uniqai.app
+    about: For anything you would rather not post publicly.

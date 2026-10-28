@@ -1,0 +1,10 @@
+{
+  "$comment": "GitHub repository settings to apply at publish time (from oss/_shared/meta.json). Not read by any script.",
+  "name": "ai-video-pricing",
+  "description": "AI video pricing tracker: price per second and per clip for Kling 3.0, Veo 3, Runway, Luma, Pika, MiniMax Hailuo, Seedance, Higgsfield and UniqAI, from each vendor's own pricing page with URL and check date. JSON + CSV data, a zero-dependency Node CLI that recomputes $/s and flags stale rows. By UniqAI.",
+  "homepage": "https://uniqai.app/video/ai-video-cost-per-second?utm_source=github&utm_medium=readme&utm_campaign=ai-video-pricing",
+  "topics": ["ai-video", "pricing", "price-comparison", "kling", "veo3", "runway", "luma", "pika", "seedance", "hailuo", "text-to-video", "dataset", "claude-skills", "agent-skills", "uniqai"],
+  "social_preview": "assets/social-preview.png",
+  "features": { "issues": true, "discussions": true, "wiki": false, "projects": false },
+  "default_branch": "main"
+}

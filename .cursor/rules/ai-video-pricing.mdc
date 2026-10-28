@@ -1,0 +1,7 @@
+---
+description: Answers AI video cost questions (per second, per clip, cheapest model, same model through different apps and APIs) from a dated, sourced dataset and a zero-dependency CLI; use when the user asks what Kling, Veo, Runway, Luma, Pika, Hailuo, Seedance or UniqAI video generation costs, or wants a plan's credits converted to dollars.
+globs:
+alwaysApply: false
+---
+
+@SKILL.md

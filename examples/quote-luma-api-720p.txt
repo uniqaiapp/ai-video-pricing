@@ -1,0 +1,4 @@
+$ per second: 0.060
+formula: $0.30 ÷ 5 s
+$ per clip (5 s): 0.300
+$ per minute: 3.60

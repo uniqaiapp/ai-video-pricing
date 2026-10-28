@@ -1,0 +1,10 @@
+{
+  "name": "ai-video-pricing",
+  "schema_version": 1,
+  "updated": "2026-10-28",
+  "currency": "USD",
+  "rounding": "usd_per_second rounded to 3 decimals; plan prices are monthly billing",
+  "license": "CC-BY-4.0",
+  "attribution": "UniqAI, https://github.com/uniqaiapp/ai-video-pricing",
+  "explainer": "https://uniqai.app/video/ai-video-cost-per-second"
+}

@@ -1,0 +1,17 @@
+{
+  "$comment": "Each example file is the exact stdout of `node scripts/avp.mjs <args>`. Regenerate with `node scripts/examples.mjs`; tests/cli.test.mjs checks them byte for byte.",
+  "cheapest-720p.txt": ["cheapest", "--resolution", "720p"],
+  "cheapest-with-audio.txt": ["cheapest", "--audio", "yes", "--brief"],
+  "kling-3-0-doors.md": ["model", "Kling 3.0"],
+  "veo-doors.md": ["model", "Veo"],
+  "seedance-2-0-doors.md": ["model", "Seedance 2.0"],
+  "under-5-cents.md": ["table", "--max", "0.05", "--published"],
+  "api-only.csv": ["table", "--door", "api", "--published", "--format", "csv"],
+  "uniqai.json": ["table", "--service", "UniqAI", "--format", "json"],
+  "quote-runway-standard.txt": ["quote", "--plan-price", "15", "--credits", "625", "--credits-per-second", "12"],
+  "quote-uniqai-kling-5s.txt": ["quote", "--plan-price", "4.99", "--credits", "1000", "--credits-per-clip", "80", "--seconds", "5"],
+  "quote-luma-api-720p.txt": ["quote", "--clip-price", "0.30", "--seconds", "5"],
+  "stale-2026-12-01.md": ["stale", "--days", "30", "--as-of", "2026-12-01"],
+  "stale-2026-11-20.txt": ["stale", "--days", "30", "--as-of", "2026-11-20", "--format", "text"],
+  "validate.txt": ["validate"]
+}
