@@ -109,12 +109,33 @@ test("no package manifests, lockfiles or dependencies", () => {
   }
 });
 
-test("every brand link in README carries the repo UTM (data source links in the table excepted); one Made-by footer", () => {
-  const full = read("README.md");
-  // The generated price table cites https://uniqai.app/pricing as a data source, deliberately without UTM.
-  const prose = full.replace(/<!-- prices:start -->[\s\S]*?<!-- prices:end -->/, "");
-  const links = [...prose.matchAll(/https:\/\/uniqai\.app[^\s)"<]*/g)].map((m) => m[0]);
-  assert.ok(links.length > 0 && links.length <= 3, `README has ${links.length} brand links; max 3`);
-  for (const l of links) assert.ok(l.includes(`utm_campaign=${REPO}`), `README link without UTM: ${l}`);
-  assert.equal((full.match(/Made by <a href/g) || []).length, 1);
+const READMES = fs.readdirSync(ROOT).filter((f) => /^README(\.[A-Za-z-]+)?\.md$/.test(f)).sort();
+
+test("every brand link in each README carries the repo UTM (data source links in the table excepted); one Made-by footer", () => {
+  for (const name of READMES) {
+    const full = read(name);
+    // utm_medium is readme for README.md and readme-<lang> (lower case) for README.<lang>.md
+    const medium = name === "README.md" ? "readme" : "readme-" + name.slice(7, -3).toLowerCase();
+    // The generated price table cites https://uniqai.app/pricing as a data source, deliberately without UTM.
+    const prose = full.replace(/<!-- prices:start -->[\s\S]*?<!-- prices:end -->/, "");
+    const links = [...prose.matchAll(/https:\/\/uniqai\.app[^\s)"<]*/g)].map((m) => m[0]);
+    assert.ok(links.length > 0 && links.length <= 3, `${name} has ${links.length} brand links; max 3`);
+    for (const l of links) {
+      assert.ok(l.includes(`utm_campaign=${REPO}`), `${name} link without UTM: ${l}`);
+      assert.ok(l.includes(`utm_medium=${medium}&`), `${name} link must use utm_medium=${medium}: ${l}`);
+    }
+    // one footer line per file: <sub>… <a href="https://uniqai.app/?utm_…">UniqAI</a> …</sub>; README.md keeps the English wording
+    const footers = full.match(/^<sub>[^\n]*<a href="https:\/\/uniqai\.app\/\?utm_[^"]*">UniqAI<\/a>[^\n]*<\/sub>$/gm) || [];
+    assert.equal(footers.length, 1, `${name}: exactly one UniqAI footer line`);
+    if (name === "README.md") assert.equal((full.match(/Made by <a href/g) || []).length, 1);
+  }
+});
+
+test("every README links every sibling language, and relative links resolve", () => {
+  for (const name of READMES) {
+    const md = read(name);
+    for (const other of READMES) if (other !== name) assert.ok(md.includes(`](${other})`), `${name} does not link ${other}`);
+    for (const m of md.matchAll(/\]\(((?!https?:\/\/|#|mailto:)[^)#]+)\)/g)) assert.ok(fs.existsSync(path.join(ROOT, m[1])), `${name}: broken relative link ${m[1]}`);
+    for (const m of md.matchAll(/(?:src|srcset)="((?!https?:\/\/)[^"]+)"/g)) assert.ok(fs.existsSync(path.join(ROOT, m[1])), `${name}: missing asset ${m[1]}`);
+  }
 });

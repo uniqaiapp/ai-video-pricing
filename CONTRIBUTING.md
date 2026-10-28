@@ -12,12 +12,13 @@ Corrections are the point of this repo. If a vendor's page says something differ
 node scripts/avp.mjs recompute --write   # fills usd_per_second from the inputs
 node scripts/avp.mjs validate            # schema + arithmetic + dates + URLs
 node scripts/avp.mjs export              # data/prices.csv
-node scripts/avp.mjs readme --write      # the table in README.md
+node scripts/avp.mjs readme --write      # the table in README.md and every README.<lang>.md
 node scripts/examples.mjs                # examples/*
 node tests/run.mjs                       # must be green
 ```
 
 4. If `checked_on` moved, update `updated` in `data/meta.json` to the newest date (a test enforces it).
+   The translated READMEs (`README.ru.md`, `README.zh-CN.md`, `README.es.md`, `README.pt-BR.md`, `README.ja.md`, `README.ko.md`, `README.de.md`) share the same table rows; `readme --write` refreshes them and keeps each file's translated header row. Only the prose needs a human when it changes in `README.md`.
 5. In the PR, paste the source URL and quote the line you read. The PR template asks for it.
 
 ## Rules
@@ -38,3 +39,4 @@ node tests/run.mjs                       # must be green
 - Data is JSON + a generated CSV rather than YAML, so it loads with `JSON.parse` in any language with no parser dependency.
 - The README table contains the eight UniqAI source links (`https://uniqai.app/pricing`) because they are the data rows' source URLs. They carry no UTM on purpose; the brand links with UTM are the explainer link and the footer.
 - `.gitignore` lists the standard Node dependency folder (hygiene) although that folder name is on the forbidden-strings list; the adapters test exempts that one file.
+- Full translations of the README in seven languages (`README.<lang>.md`) instead of the short `README.ru.md` from CONVENTIONS section 4.2; the price table rows stay identical in every language and only the header row is translated.

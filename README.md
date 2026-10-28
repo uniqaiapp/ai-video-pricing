@@ -20,6 +20,8 @@
 
 </div>
 
+English · [Русский](README.ru.md) · [简体中文](README.zh-CN.md) · [Español](README.es.md) · [Português (BR)](README.pt-BR.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Deutsch](README.de.md)
+
 AI video cost per second for Kling 3.0, Veo 3 and 3.1, Runway Gen-4.5, Luma Ray3.2, Pika, MiniMax Hailuo and H3, Seedance via BytePlus, Higgsfield, Google Flow, the Gemini API and UniqAI, checked on 2026-10-28, with a source URL on every row. Vendors sell plans and credits, not seconds, so the table divides what you pay by the seconds you get and shows the arithmetic in the cell. The data is JSON and CSV under CC BY 4.0; a Node CLI with no dependencies filters it, recomputes it, prices your own plan, and lists rows that are overdue for a recheck. The long-form explainer with the same numbers is on [uniqai.app](https://uniqai.app/video/ai-video-cost-per-second?utm_source=github&utm_medium=readme&utm_campaign=ai-video-pricing).
 
 | **One formula, shown** | **Vendor pages only** | **Stale rows get flagged** |

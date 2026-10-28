@@ -4,7 +4,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { load, loadSchema, validate, compute, round3, toCsv, readmeWithTable, readmeTable, stale, perCredit, formula, ROOT, CSV, README } from "../scripts/avp.mjs";
+import { load, loadSchema, validate, compute, round3, toCsv, readmeWithTable, readmeTable, translatedReadmes, stale, perCredit, formula, ROOT, CSV, README } from "../scripts/avp.mjs";
 
 const rows = load();
 const meta = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "meta.json"), "utf8"));
@@ -62,6 +62,22 @@ test("README table between the markers is exactly `avp readme` output, and the b
   assert.equal(md, readmeWithTable(md, readmeTable(rows)), "run: node scripts/avp.mjs readme --write");
   assert.ok(md.includes(`checked-${meta.updated.replace(/-/g, "--")}`), "README badge date must equal data/meta.json updated");
   assert.ok(md.includes(`checked on ${meta.updated}`) || md.includes(`checked ${meta.updated}`), "README prose must state the check date");
+});
+
+test("translated READMEs (README.<lang>.md) carry exactly the generated table rows under their own header row", () => {
+  const files = translatedReadmes();
+  assert.ok(files.length > 0, "no README.<lang>.md found");
+  const en = readmeTable(rows).split("\n");
+  for (const file of files) {
+    const name = path.basename(file);
+    const md = fs.readFileSync(file, "utf8");
+    assert.equal(md, readmeWithTable(md, readmeTable(rows), true), `${name}: run node scripts/avp.mjs readme --write`);
+    const block = md.slice(md.indexOf("<!-- prices:start -->"), md.indexOf("<!-- prices:end -->")).split("\n").slice(1);
+    assert.equal(block[0].split("|").length, en[0].split("|").length, `${name}: header column count`);
+    assert.deepEqual(block.slice(1), en.slice(1), `${name}: data rows differ from README.md`);
+    assert.ok(md.includes(`checked-${meta.updated.replace(/-/g, "--")}`), `${name}: badge date must equal data/meta.json updated`);
+    assert.ok(md.includes(meta.updated), `${name}: prose must state the check date`);
+  }
 });
 
 test("data/meta.json updated equals the newest checked_on", () => {

@@ -11,6 +11,7 @@
 //   node scripts/avp.mjs stale [--days 30] [--as-of YYYY-MM-DD] [--format md|text|json]
 //   node scripts/avp.mjs export [--csv data/prices.csv]         regenerate the CSV from the JSON
 //   node scripts/avp.mjs readme [--write]                       refresh the table between the README markers
+//                                                               (--write also refreshes README.<lang>.md, keeping each file's translated header row)
 //
 // Filters: --service X --model X --maker X --door app|api --resolution 720p --audio yes|no --max 0.10 --published
 // --brief with --format text keeps only price, service, model and clip (fits a narrow terminal).
@@ -24,6 +25,10 @@ export const DATA = path.join(ROOT, "data", "prices.json");
 export const CSV = path.join(ROOT, "data", "prices.csv");
 export const SCHEMA = path.join(ROOT, "data", "schema.json");
 export const README = path.join(ROOT, "README.md");
+// Translations (README.ru.md, README.zh-CN.md, ...): same table rows, header row in that language.
+export function translatedReadmes(root = ROOT) {
+  return fs.readdirSync(root).filter((f) => /^README\.[A-Za-z]{2}(-[A-Za-z]{2})?\.md$/.test(f)).sort().map((f) => path.join(root, f));
+}
 
 export const COLUMNS = [
   "id", "service", "door", "model", "maker", "tier", "billing",
@@ -255,9 +260,15 @@ export function quote(o) {
 }
 
 // ---------- readme ----------
-export function readmeWithTable(readme, table) {
+// keepHeader: keep the file's own (translated) header row and replace only the alignment and data rows.
+export function readmeWithTable(readme, table, keepHeader = false) {
   const a = readme.indexOf(MARK_START), b = readme.indexOf(MARK_END);
   if (a < 0 || b < 0 || b < a) throw new Error(`README is missing ${MARK_START} / ${MARK_END}`);
+  if (keepHeader) {
+    const head = readme.slice(a + MARK_START.length, b).replace(/^\n/, "").split("\n")[0];
+    if (!/^\|.*\|$/.test(head) || head.split("|").length !== table.split("\n")[0].split("|").length) throw new Error("translated README needs a header row with the same number of columns right after the start marker");
+    table = head + "\n" + table.split("\n").slice(1).join("\n");
+  }
   return readme.slice(0, a + MARK_START.length) + "\n" + table + readme.slice(b);
 }
 export function readmeTable(rows) { return toMarkdown(sortRows(rows, "price")); }
@@ -336,7 +347,11 @@ export function main(argv = process.argv.slice(2), io = { out: (s) => process.st
     }
     case "readme": {
       const next = readmeWithTable(fs.readFileSync(README, "utf8"), readmeTable(rows));
-      if (o.write) { fs.writeFileSync(README, next); io.out("README table refreshed\n"); } else io.out(next);
+      if (!o.write) { io.out(next); return 0; }
+      fs.writeFileSync(README, next);
+      const translations = translatedReadmes();
+      for (const file of translations) fs.writeFileSync(file, readmeWithTable(fs.readFileSync(file, "utf8"), readmeTable(rows), true));
+      io.out(`README table refreshed${translations.length ? ` (+ ${translations.map((f) => path.basename(f)).join(", ")})` : ""}\n`);
       return 0;
     }
     default: io.err(`unknown command: ${cmd}\n\n${HELP}\n`); return 2;
