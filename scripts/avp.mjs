@@ -67,7 +67,7 @@ export function compute(r) {
   }
 }
 
-const usd = (x) => "$" + (Math.round(x * 100) === x * 100 ? x.toFixed(2) : String(x));
+const usd = (x) => "$" + (Math.abs(x * 100 - Math.round(x * 100)) < 1e-9 ? x.toFixed(2) : String(x));
 const n = (x) => x.toLocaleString("en-US");
 
 // Human-readable arithmetic for the row, so every number in the table shows its working.
@@ -276,7 +276,15 @@ export function parseArgs(argv) {
   return o;
 }
 
-const HELP = fs.readFileSync(fileURLToPath(import.meta.url), "utf8").split("\n").slice(1).filter((l) => l.startsWith("//")).map((l) => l.replace(/^\/\/ ?/, "")).join("\n");
+// Help text = the leading comment block of this file (stops at the first non-comment line).
+const HELP = (() => {
+  const out = [];
+  for (const l of fs.readFileSync(fileURLToPath(import.meta.url), "utf8").split("\n").slice(1)) {
+    if (!l.startsWith("//")) break;
+    out.push(l.replace(/^\/\/ ?/, ""));
+  }
+  return out.join("\n");
+})();
 
 export function main(argv = process.argv.slice(2), io = { out: (s) => process.stdout.write(s), err: (s) => process.stderr.write(s) }) {
   const o = parseArgs(argv);

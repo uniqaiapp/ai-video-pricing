@@ -61,7 +61,7 @@ This skill answers AI video price questions by running `scripts/avp.mjs` against
 
 ## Examples
 
-See [examples/README.md](examples/README.md); every file there is the exact output of the command listed in [examples/commands.json](examples/commands.json). Useful ones: [examples/kling-3-0-doors.md](examples/kling-3-0-doors.md) (same model, five doors), [examples/under-5-cents.md](examples/under-5-cents.md), [examples/quote-uniqai-kling-5s.txt](examples/quote-uniqai-kling-5s.txt).
+See [examples/README.md](examples/README.md); every file there is the exact output of the command listed in [examples/commands.json](examples/commands.json). Useful ones: [examples/kling-3-0-doors.md](examples/kling-3-0-doors.md) (same model, six doors), [examples/under-5-cents.md](examples/under-5-cents.md), [examples/quote-uniqai-kling-5s.txt](examples/quote-uniqai-kling-5s.txt).
 
 ## Limits
 
