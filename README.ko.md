@@ -9,7 +9,7 @@
 [![License: CC BY 4.0 + MIT](https://img.shields.io/badge/license-CC_BY_4.0_%2B_MIT-d1fe17?style=flat-square&labelColor=0d0f12)](LICENSE)
 [![Claude Code skill](https://img.shields.io/badge/Claude_Code-skill-d1fe17?style=flat-square&labelColor=0d0f12)](#설치)
 [![Zero dependencies](https://img.shields.io/badge/dependencies-0-d1fe17?style=flat-square&labelColor=0d0f12)](#사용법)
-[![Prices checked](https://img.shields.io/badge/prices_checked-2026--10--28-d1fe17?style=flat-square&labelColor=0d0f12)](#가격표)
+[![Prices checked](https://img.shields.io/badge/prices_checked-2026--11--18-d1fe17?style=flat-square&labelColor=0d0f12)](#가격표)
 [![Made by UniqAI](https://img.shields.io/badge/made_by-UniqAI-fdfc07?style=flat-square&labelColor=0d0f12)](https://uniqai.app/?utm_source=github&utm_medium=readme-ko&utm_campaign=ai-video-pricing)
 
 # ai-video-pricing: AI 영상 초당 비용, Kling vs Veo vs Runway vs Luma 가격 비교
@@ -45,6 +45,8 @@ node scripts/avp.mjs quote --plan-price 15 --credits 625 --credits-per-second 12
 ## 가격표
 
 초당 가격순으로 정렬되어 있습니다. 클립 = 제조사가 명시한 제공 초 수, 해상도, 오디오 여부입니다. 두 셀은 클립 열이 같을 때만 비교하십시오. `not published`는 제조사가 앱이나 콘솔 안에서만 가격을 보여준다는 뜻입니다. [`data/prices.json`](data/prices.json)에서 `node scripts/avp.mjs readme --write`로 생성되며, 이 표와 데이터가 다르면 테스트가 실패합니다.
+
+가장 최근에 확인한 행의 날짜는 2026-11-18입니다. 각 행에 개별 확인 날짜가 표시됩니다.
 
 <!-- prices:start -->
 | 서비스 | 모델 | 클립 | 가격 기준 | $ / 초 | 공식 | 출처 | 확인일 |
@@ -86,6 +88,7 @@ node scripts/avp.mjs quote --plan-price 15 --credits 625 --credits-per-second 12
 | **MiniMax API** | MiniMax H3 | 2K | pay-as-you-go, per second of output | **$0.130** | $0.13/s published | [MiniMax video pricing](https://platform.minimax.io/docs/guides/pricing-video) | 2026-10-28 |
 | **Luma app** | Kling 3.0 | 1080p, audio | Plus plan ($30/mo, 10,000 credits) | **$0.147** | 49 cr/s × ($30.00 ÷ 10,000 cr) | [Luma pricing](https://lumalabs.ai/pricing) | 2026-10-28 |
 | **BytePlus ModelArk API** | Seedance 2.0 | 720p | pay-as-you-go (token-billed; BytePlus publishes the per-second equivalent) | **$0.150** | $0.15/s published | [ModelArk pricing](https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-pricing) | 2026-10-28 |
+| **MaxVideoAI** | Veo 3.1 Fast | 8 s, 1080p, audio | Prepaid web wallet (top-ups from $10) | **$0.156** | $1.25 ÷ 8 s | [MaxVideoAI Veo 3.1 Fast pricing](https://maxvideoai.com/models/veo-3-1-fast) | 2026-11-18 |
 | **Runway API** | Kling 3.0 | audio | pay-as-you-go ($0.01 per credit), Pro with audio | **$0.170** | 17 cr/s × $0.01/cr | [Runway API pricing](https://docs.dev.runwayml.com/guides/pricing/) | 2026-10-28 |
 | **Kling app** | Kling 3.0 | 4K | Ultra plan ($159.99/mo, 26,000 credits) | **$0.185** | 30 cr/s × ($159.99 ÷ 26,000 cr) | [Kling 3.0 credit cost guide](https://kling.ai/blog/kling-video-3-0-credit-cost-guide), 2026-07-28 | 2026-10-28 |
 | **BytePlus ModelArk API** | Seedance 2.5 | 720p | pay-as-you-go (token-billed; BytePlus publishes the per-second equivalent) | **$0.231** | $0.231/s published | [ModelArk pricing](https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-pricing) | 2026-10-28 |
@@ -258,7 +261,7 @@ node tests/run.mjs
 - 여기 있는 모든 숫자는 표시된 날짜에 링크된 제조사 페이지에서 읽었거나, 그런 숫자로부터 셀 안의 공식으로 계산한 것입니다. 추정치는 없습니다. 가격을 숨기는 제조사는 `not_published` 행을 받습니다.
 - 이 데이터셋은 표준 월간 결제 기준으로 유료 출력의 가격을 매깁니다. 매일 지급되는 무료 크레딧, 첫 달 프로모션, 연간 할인, 워터마크, 상업용 라이선스 등급, "무제한" 모드, 크레딧 이월, API 최소 사용량은 일부 사용자에게 실제 가격을 바꿉니다. 이런 내용은 `notes`와 [방법론](references/methodology.md)에 있고 숫자에는 들어 있지 않습니다.
 - UniqAI 자체 행도 다른 모든 곳과 같은 규칙을 따릅니다. 요금제 없이 누구나 살 수 있는 두 개의 팩, 그리고 하한선으로서 가장 큰 팩입니다. UniqAI는 Kling 3.0과 Wan 2.5에서는 저렴한 경로 중 하나이고 Veo 3에서는 비싼 경로 중 하나이며, 표도 그렇게 말합니다.
-- 이 README의 행, 서비스, 모델 수는 `node scripts/avp.mjs validate`(`ok: 69 rows, 64 published`)와 예시에서 나옵니다. 사용량, 다운로드 수, 인기 수치는 없습니다. 솔직한 수치가 없기 때문입니다.
+- 이 README의 행, 서비스, 모델 수는 `node scripts/avp.mjs validate`(`ok: 70 rows, 65 published`)와 예시에서 나옵니다. 사용량, 다운로드 수, 인기 수치는 없습니다. 솔직한 수치가 없기 때문입니다.
 - 해상도 표기는 제조사의 것을 그대로 쓰며 정규화하지 않았습니다. 데이터셋은 USD와 영어 기준이고 위에 나열된 제조사를 다루며, 완전하다고 주장하지 않습니다.
 
 ## FAQ

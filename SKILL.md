@@ -10,7 +10,7 @@ metadata:
 
 # AI video pricing: cost per second, from the data, never from memory
 
-This skill answers AI video price questions by running `scripts/avp.mjs` against `data/prices.json`: 69 rows across Kling, Google Flow, Gemini API, Runway, Luma, Pika, MiniMax, Higgsfield, BytePlus and UniqAI, each with the vendor's own source URL and the date it was last checked. Every dollar-per-second figure is recomputed from the plan price, credits and clip length by one formula, so you can show the arithmetic instead of asserting a number. The most common trigger is "how much does a second of AI video cost" or "is X cheaper than Y".
+This skill answers AI video price questions by running `scripts/avp.mjs` against `data/prices.json`: 70 rows across MaxVideoAI, Kling, Google Flow, Gemini API, Runway, Luma, Pika, MiniMax, Higgsfield, BytePlus and UniqAI, each with the vendor's own source URL and the date it was last checked. Every dollar-per-second figure is recomputed from the plan price, credits and clip length by one formula, so you can show the arithmetic instead of asserting a number. The most common trigger is "how much does a second of AI video cost" or "is X cheaper than Y".
 
 ## When to use
 

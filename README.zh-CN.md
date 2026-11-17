@@ -9,7 +9,7 @@
 [![License: CC BY 4.0 + MIT](https://img.shields.io/badge/license-CC_BY_4.0_%2B_MIT-d1fe17?style=flat-square&labelColor=0d0f12)](LICENSE)
 [![Claude Code skill](https://img.shields.io/badge/Claude_Code-skill-d1fe17?style=flat-square&labelColor=0d0f12)](#安装)
 [![Zero dependencies](https://img.shields.io/badge/dependencies-0-d1fe17?style=flat-square&labelColor=0d0f12)](#用法)
-[![Prices checked](https://img.shields.io/badge/prices_checked-2026--10--28-d1fe17?style=flat-square&labelColor=0d0f12)](#价格表)
+[![Prices checked](https://img.shields.io/badge/prices_checked-2026--11--18-d1fe17?style=flat-square&labelColor=0d0f12)](#价格表)
 [![Made by UniqAI](https://img.shields.io/badge/made_by-UniqAI-fdfc07?style=flat-square&labelColor=0d0f12)](https://uniqai.app/?utm_source=github&utm_medium=readme-zh-cn&utm_campaign=ai-video-pricing)
 
 # ai-video-pricing：AI 视频每秒多少钱，Kling、Veo、Runway、Luma 价格对比
@@ -45,6 +45,8 @@ node scripts/avp.mjs quote --plan-price 15 --credits 625 --credits-per-second 12
 ## 价格表
 
 按每秒价格排序。片段 = 厂商标明的交付秒数、分辨率和音频；只有“片段”一列相同时，两个单元格才可比。`not published` 表示厂商只在应用或控制台内显示价格。由 `node scripts/avp.mjs readme --write` 从 [`data/prices.json`](data/prices.json) 生成；表格与数据不一致时测试会失败。
+
+最近一次逐行核查的日期为 2026-11-18。每行均标明各自的核查日期。
 
 <!-- prices:start -->
 | 服务 | 模型 | 片段 | 计价基础 | $ / 秒 | 公式 | 来源 | 检查日期 |
@@ -86,6 +88,7 @@ node scripts/avp.mjs quote --plan-price 15 --credits 625 --credits-per-second 12
 | **MiniMax API** | MiniMax H3 | 2K | pay-as-you-go, per second of output | **$0.130** | $0.13/s published | [MiniMax video pricing](https://platform.minimax.io/docs/guides/pricing-video) | 2026-10-28 |
 | **Luma app** | Kling 3.0 | 1080p, audio | Plus plan ($30/mo, 10,000 credits) | **$0.147** | 49 cr/s × ($30.00 ÷ 10,000 cr) | [Luma pricing](https://lumalabs.ai/pricing) | 2026-10-28 |
 | **BytePlus ModelArk API** | Seedance 2.0 | 720p | pay-as-you-go (token-billed; BytePlus publishes the per-second equivalent) | **$0.150** | $0.15/s published | [ModelArk pricing](https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-pricing) | 2026-10-28 |
+| **MaxVideoAI** | Veo 3.1 Fast | 8 s, 1080p, audio | Prepaid web wallet (top-ups from $10) | **$0.156** | $1.25 ÷ 8 s | [MaxVideoAI Veo 3.1 Fast pricing](https://maxvideoai.com/models/veo-3-1-fast) | 2026-11-18 |
 | **Runway API** | Kling 3.0 | audio | pay-as-you-go ($0.01 per credit), Pro with audio | **$0.170** | 17 cr/s × $0.01/cr | [Runway API pricing](https://docs.dev.runwayml.com/guides/pricing/) | 2026-10-28 |
 | **Kling app** | Kling 3.0 | 4K | Ultra plan ($159.99/mo, 26,000 credits) | **$0.185** | 30 cr/s × ($159.99 ÷ 26,000 cr) | [Kling 3.0 credit cost guide](https://kling.ai/blog/kling-video-3-0-credit-cost-guide), 2026-07-28 | 2026-10-28 |
 | **BytePlus ModelArk API** | Seedance 2.5 | 720p | pay-as-you-go (token-billed; BytePlus publishes the per-second equivalent) | **$0.231** | $0.231/s published | [ModelArk pricing](https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-pricing) | 2026-10-28 |
@@ -258,7 +261,7 @@ node tests/run.mjs
 - 这里的每个数字要么是在标注日期从所链接的厂商页面读取的，要么是用单元格里的公式从这些数字算出来的。没有任何估算。隐藏价格的厂商得到一行 `not_published`。
 - 本数据集按标准月付计算付费产出的价格。每日免费积分、首月促销、年付折扣、水印、商用授权档位、“无限”模式、积分结转和 API 最低消费都会改变部分用户的实际价格；这些写在 `notes` 和[方法说明](references/methodology.md)里，不计入数字。
 - UniqAI 自己的行遵守与其他家完全相同的规则：任何人无需订阅即可购买的两个积分包，加上作为下限的最大积分包。UniqAI 在 Kling 3.0 和 Wan 2.5 上属于较便宜的渠道，在 Veo 3 上属于较贵的渠道；表格就是这么写的。
-- 本 README 中的行数、服务数和模型数来自 `node scripts/avp.mjs validate`（`ok: 69 rows, 64 published`）和示例文件。这里没有使用量、下载量或热度数字，因为我们没有诚实的数据可写。
+- 本 README 中的行数、服务数和模型数来自 `node scripts/avp.mjs validate`（`ok: 70 rows, 65 published`）和示例文件。这里没有使用量、下载量或热度数字，因为我们没有诚实的数据可写。
 - 分辨率标签沿用厂商的写法，未做归一化。数据集以美元和英文为准，只覆盖上面列出的厂商，不声称完整。
 
 ## FAQ
