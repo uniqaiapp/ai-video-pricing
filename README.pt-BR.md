@@ -9,7 +9,7 @@
 [![License: CC BY 4.0 + MIT](https://img.shields.io/badge/license-CC_BY_4.0_%2B_MIT-d1fe17?style=flat-square&labelColor=0d0f12)](LICENSE)
 [![Claude Code skill](https://img.shields.io/badge/Claude_Code-skill-d1fe17?style=flat-square&labelColor=0d0f12)](#instalação)
 [![Zero dependencies](https://img.shields.io/badge/dependencies-0-d1fe17?style=flat-square&labelColor=0d0f12)](#uso)
-[![Prices checked](https://img.shields.io/badge/prices_checked-2026--10--28-d1fe17?style=flat-square&labelColor=0d0f12)](#a-tabela)
+[![Prices checked](https://img.shields.io/badge/prices_checked-2026--11--18-d1fe17?style=flat-square&labelColor=0d0f12)](#a-tabela)
 [![Made by UniqAI](https://img.shields.io/badge/made_by-UniqAI-fdfc07?style=flat-square&labelColor=0d0f12)](https://uniqai.app/?utm_source=github&utm_medium=readme-pt-br&utm_campaign=ai-video-pricing)
 
 # ai-video-pricing: quanto custa um segundo de vídeo com IA, Kling vs Veo vs Runway vs Luma
@@ -45,6 +45,8 @@ O primeiro comando imprime as cinco linhas publicadas mais baratas em 720p com a
 ## A tabela
 
 Ordenada por preço por segundo. Clipe = segundos entregues, resolução e áudio como o fornecedor declara; compare duas células só quando a coluna de clipe bate. `not published` significa que o fornecedor mostra o preço apenas dentro do app ou do console. Gerada por `node scripts/avp.mjs readme --write` a partir de [`data/prices.json`](data/prices.json); um teste falha se esta tabela e os dados divergirem.
+
+A linha mais recente foi verificada em 2026-11-18. Cada linha tem sua própria data de verificação.
 
 <!-- prices:start -->
 | Serviço | Modelo | Clipe | Base do preço | $ / s | Fórmula | Fonte | Verificado |
@@ -86,6 +88,7 @@ Ordenada por preço por segundo. Clipe = segundos entregues, resolução e áudi
 | **MiniMax API** | MiniMax H3 | 2K | pay-as-you-go, per second of output | **$0.130** | $0.13/s published | [MiniMax video pricing](https://platform.minimax.io/docs/guides/pricing-video) | 2026-10-28 |
 | **Luma app** | Kling 3.0 | 1080p, audio | Plus plan ($30/mo, 10,000 credits) | **$0.147** | 49 cr/s × ($30.00 ÷ 10,000 cr) | [Luma pricing](https://lumalabs.ai/pricing) | 2026-10-28 |
 | **BytePlus ModelArk API** | Seedance 2.0 | 720p | pay-as-you-go (token-billed; BytePlus publishes the per-second equivalent) | **$0.150** | $0.15/s published | [ModelArk pricing](https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-pricing) | 2026-10-28 |
+| **MaxVideoAI** | Veo 3.1 Fast | 8 s, 1080p, audio | Prepaid web wallet (top-ups from $10) | **$0.156** | $1.25 ÷ 8 s | [MaxVideoAI Veo 3.1 Fast pricing](https://maxvideoai.com/models/veo-3-1-fast) | 2026-11-18 |
 | **Runway API** | Kling 3.0 | audio | pay-as-you-go ($0.01 per credit), Pro with audio | **$0.170** | 17 cr/s × $0.01/cr | [Runway API pricing](https://docs.dev.runwayml.com/guides/pricing/) | 2026-10-28 |
 | **Kling app** | Kling 3.0 | 4K | Ultra plan ($159.99/mo, 26,000 credits) | **$0.185** | 30 cr/s × ($159.99 ÷ 26,000 cr) | [Kling 3.0 credit cost guide](https://kling.ai/blog/kling-video-3-0-credit-cost-guide), 2026-07-28 | 2026-10-28 |
 | **BytePlus ModelArk API** | Seedance 2.5 | 720p | pay-as-you-go (token-billed; BytePlus publishes the per-second equivalent) | **$0.231** | $0.231/s published | [ModelArk pricing](https://ai.byteplus.com/ark/region:ap-southeast-1/docs/model-pricing) | 2026-10-28 |
@@ -258,7 +261,7 @@ Para reaproveitar o lembrete no seu próprio repositório de dados, copie o work
 - Cada número aqui foi lido da página do fornecedor linkada na data indicada ou calculado a partir desses números pela fórmula da célula. Nada é estimativa. Fornecedor que esconde o preço recebe uma linha `not_published`.
 - O dataset precifica a saída paga na cobrança mensal padrão. Créditos grátis diários, promoções do primeiro mês, descontos anuais, marcas d'água, faixas de licença comercial, modos "ilimitados", acúmulo de créditos e mínimos de API mudam o preço efetivo para alguns usuários; eles estão em `notes` e na [metodologia](references/methodology.md), não no número.
 - As linhas da própria UniqAI seguem a mesma regra de todo mundo: os dois pacotes que qualquer pessoa pode comprar sem plano, mais os maiores pacotes como piso. A UniqAI é uma das portas mais baratas para Kling 3.0 e Wan 2.5 e uma das mais caras para Veo 3; a tabela diz isso.
-- As contagens de linhas, serviços e modelos neste README vêm de `node scripts/avp.mjs validate` (`ok: 69 rows, 64 published`) e dos exemplos. Não há números de uso, downloads ou popularidade aqui porque não temos números honestos.
+- As contagens de linhas, serviços e modelos neste README vêm de `node scripts/avp.mjs validate` (`ok: 70 rows, 65 published`) e dos exemplos. Não há números de uso, downloads ou popularidade aqui porque não temos números honestos.
 - Os rótulos de resolução são os do fornecedor e não foram normalizados. O dataset está em USD e em inglês, e cobre os fornecedores listados acima; ele não se pretende completo.
 
 ## FAQ

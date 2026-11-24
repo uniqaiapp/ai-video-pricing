@@ -87,10 +87,17 @@ test("data/meta.json updated equals the newest checked_on", () => {
 });
 
 test("stale() measures age from --as-of and sorts oldest first", () => {
-  assert.equal(stale(rows, { days: 30, asOf: "2026-11-27" }).length, 0);
-  const s = stale(rows, { days: 30, asOf: "2026-11-28" });
-  assert.equal(s.length, rows.length);
-  assert.equal(s[0].age_days, 31);
+  const sample = [
+    { id: "exactly-30-days", checked_on: "2026-10-29" },
+    { id: "just-stale", checked_on: "2026-10-28" },
+    { id: "fresh", checked_on: "2026-11-18" },
+    { id: "oldest", checked_on: "2026-10-27" },
+  ];
+  const expired = stale(sample, { days: 30, asOf: "2026-11-28" });
+  assert.deepEqual(expired.map(({ id, age_days }) => [id, age_days]), [
+    ["oldest", 32],
+    ["just-stale", 31],
+  ]);
   const custom = stale([{ id: "a", checked_on: "2026-01-01" }, { id: "b", checked_on: "2026-06-01" }], { days: 30, asOf: "2026-07-01" });
   assert.deepEqual(custom.map((r) => r.id), ["a"]);
 });
